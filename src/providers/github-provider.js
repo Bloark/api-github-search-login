@@ -14,13 +14,14 @@ const GithubProvider = ({children}) =>{
     const [githubState, setGithubState] = useState({
         loading:false,
         user:{
+            avatar: undefined,
             login: undefined,
             name: undefined,
             html_url: undefined,
             blog:undefined,
             company:undefined,
             location:undefined,
-            follower:0,
+            followers:0,
             following:0,
             public_gists:0,
             public_repos:0,
@@ -31,21 +32,22 @@ const GithubProvider = ({children}) =>{
     });
 
     const getUser = (username) => {
-        api.get(`users/${username}`).then(({data: { user } }) =>{
-
+        api.get(`users/${username}`).then(({data }) =>{
+            console.log(data);
             setGithubState((prevState) => ({
                 ...prevState,
                 user:{
-                    login: user.login,
-                    name: user.login,
-                    html_url: user.html_url,
-                    blog: user.blog,
-                    company: user.company,
-                    location: user.location,
-                    follower: user.follower,
-                    following: user.following,
-                    public_gists: user.public_gists,
-                    public_repos: user.public_repos,
+                    avatar: data.avatar_url,
+                    login: data.login,
+                    name: data.login,
+                    html_url: data.html_url,
+                    blog: data.blog,
+                    company: data.company,
+                    location: data.location,
+                    followers: data.followers,
+                    following: data.following,
+                    public_gists: data.public_gists,
+                    public_repos: data.public_repos,
                 },
             }));
 
